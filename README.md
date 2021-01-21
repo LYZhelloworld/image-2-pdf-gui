@@ -1,2 +1,2 @@
 # image-2-pdf-gui
-Compile your images into PDF files.
+Compile images into a PDF file.
