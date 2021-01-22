@@ -19,5 +19,8 @@
   "homepage": "https://github.com/LYZhelloworld/image-2-pdf-gui#readme",
   "devDependencies": {
     "electron": "^11.2.0"
+  },
+  "dependencies": {
+    "pdfkit": "^0.11.0"
   }
 }
