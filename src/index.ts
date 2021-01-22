@@ -1,27 +1,20 @@
-import { app, BrowserWindow } from 'electron'
-
-function createWindow() {
-	const win = new BrowserWindow({
-		width: 800,
-		height: 600,
-		webPreferences: {
-			nodeIntegration: true
-		}
-	})
-
-	win.loadFile('index.html')
+interface Window {
+    api: any
 }
 
-app.on('ready', createWindow)
-
-app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit()
-	}
+document.addEventListener('drop', (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    let files = event.dataTransfer?.files
+    if (!files) return
+    for (let i = 0; i < files.length; i++) {
+        let file = files[i]
+        if (file.type !== "") continue
+        window.api.generatePDF(file.path)
+    }
 })
 
-app.on('activate', () => {
-	if (BrowserWindow.getAllWindows().length === 0) {
-		createWindow()
-	}
+document.addEventListener('dragover', (event) => {
+    event.preventDefault()
+    event.stopPropagation()
 })
