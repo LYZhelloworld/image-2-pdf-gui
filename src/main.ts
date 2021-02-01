@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
+import { generatePdf } from './app'
 
 function createWindow() {
 	const win = new BrowserWindow({
@@ -28,3 +29,5 @@ app.on('activate', () => {
 		createWindow()
 	}
 })
+
+ipcMain.on('generate-pdf', generatePdf)

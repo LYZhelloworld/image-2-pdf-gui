@@ -1,20 +1,29 @@
-import { generatePDFName, getImages } from './fileutils/fileutils'
-import { createPDF } from './generator/generator'
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
+
+interface Callback {
+    pdfGenerationProgress: (filename: string) => void
+    pdfGenerationCompleted: () => void
+}
+
+let callbackFn: Callback = {
+    pdfGenerationProgress: (_) => {},
+    pdfGenerationCompleted: () => {}
+}
 
 contextBridge.exposeInMainWorld('api', {
-    generatePDF: generatePDF
+    generatePDF: (filePath: string) => ipcRenderer.send('generate-pdf', filePath),
+    onPDFGeneratinProgress: (callback: (filename: string) => void) => {
+        callbackFn.pdfGenerationProgress = callback
+    },
+    onPDFGenerationCompleted: (callback: () => void) => {
+        callbackFn.pdfGenerationCompleted = callback
+    }
 })
 
-function generatePDF(directory: string) {
-    getImages(directory).then(images => {
-        if (images.length === 0) return
-        let pdf = generatePDFName(directory)
-        createPDF(pdf, images, () => {
-            //console.log(filename)
-            // TODO: progress
-        }).then(() => {
-            // TODO: finished
-        })
-    })
-}
+ipcRenderer.on('pdf-generation-progress', (_: Electron.IpcRendererEvent, filename: string) => {
+    callbackFn.pdfGenerationProgress(filename)
+})
+
+ipcRenderer.on('pdf-generation-completed', (_: Electron.IpcRendererEvent) => {
+    callbackFn.pdfGenerationCompleted()
+})

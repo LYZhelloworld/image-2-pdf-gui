@@ -2,7 +2,7 @@ import PDFDocument from 'pdfkit'
 import fs from 'fs'
 import sizeOf from 'image-size'
 
-async function createPDF(name: string, imageFiles: string[],
+async function createPdf(name: string, imageFiles: string[],
     progressCallback: (filename: string) => void): Promise<void> {
     const doc = new PDFDocument({
         autoFirstPage: false
@@ -18,4 +18,4 @@ async function createPDF(name: string, imageFiles: string[],
     doc.end()
 }
 
-export { createPDF }
+export { createPdf }
