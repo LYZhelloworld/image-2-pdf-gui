@@ -1,5 +1,17 @@
-interface Window {
-    api: any
+import { generatePDFName, getImages } from './fileutils/fileutils'
+import { createPDF } from './generator/generator'
+
+function generatePDF(directory: string) {
+	getImages(directory).then(images => {
+		if (images.length === 0) return
+		let pdf = generatePDFName(directory)
+		createPDF(pdf, images, () => {
+			//console.log(filename)
+			// TODO: progress
+		}).then(() => {
+			// TODO: finished
+		})
+	})
 }
 
 document.addEventListener('drop', (event) => {
@@ -10,7 +22,7 @@ document.addEventListener('drop', (event) => {
     for (let i = 0; i < files.length; i++) {
         let file = files[i]
         if (file.type !== "") continue
-        window.api.generatePDF(file.path)
+        generatePDF(file.path)
     }
 })
 
