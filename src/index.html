@@ -8,9 +8,17 @@
     <link rel="stylesheet" href="index.css">
 </head>
 
-<body>
-    <h1>Drag and drop your folder containing images here.</h1>
-    <p>The images will be sorted alphabetically according to their file names.</p>
+<body class="center">
+    <div class="container">
+        <h1>Drop your folder here</h1>
+        <p>The images will be sorted alphabetically according to their file names.</p>
+    </div>
+    <div id="drag-overlayer" class="overlayer center" style="display: none">
+        <div class="container">
+            <h1>Drop here</h1>
+        </div>
+    </div>
+    <div id="drag-area" class="drag-area"></div>
 </body>
 
 </html>

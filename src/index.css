@@ -1,4 +1,40 @@
 body {
-    background: white;
+    background: #161925;
     font-family: Arial, Helvetica, sans-serif;
+    color: #eee;
+    height: 100vh;
+    margin: 0;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    text-align: center;
+    user-select: none;
+}
+
+.overlayer {
+    z-index: 99;
+    opacity: 0.95;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 20px dashed #ccc;
+    border-radius: 20px;
+    background-color: #777;
+}
+
+.drag-area {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
