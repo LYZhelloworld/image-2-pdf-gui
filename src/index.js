@@ -1,25 +1,9 @@
-import { generatePDFName, getImages } from './fileutils/fileutils'
-import { createPDF } from './generator/generator'
-
-function generatePDF(directory: string) {
-    getImages(directory).then(images => {
-        if (images.length === 0) return
-        let pdf = generatePDFName(directory)
-        createPDF(pdf, images, () => {
-            //console.log(filename)
-            // TODO: progress
-        }).then(() => {
-            // TODO: finished
-        })
-    })
-}
-
-function toogleDragOverlayer(show: boolean) {
+function toogleDragOverlayer(show) {
     let overlayer = document.getElementById("drag-overlayer")
     if (show) {
-        overlayer!.style.display = ""
+        overlayer.style.display = ""
     } else {
-        overlayer!.style.display = "none"
+        overlayer.style.display = "none"
     }
 }
 
@@ -32,7 +16,7 @@ document.addEventListener('drop', (event) => {
     for (let i = 0; i < files.length; i++) {
         let file = files[i]
         if (file.type !== "") continue
-        generatePDF(file.path)
+        window.api.generatePDF(file.path)
     }
 })
 
